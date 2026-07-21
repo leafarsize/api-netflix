@@ -3,31 +3,39 @@ const morgan = require("morgan");
 const app = express();
 const mongoose = require("mongoose");
 
-
-
 app.use(express.json());
-const PORT = 3000;
-
-
 app.use(morgan("dev"));
 
 mongoose.connect("mongodb+srv://grupo:grupo@servidorprueba.ygegryf.mongodb.net/netflix")
     .then(() => {
-        console.log("Conectado Correctamente a MongoBB");
+        console.log("Conectado Correctamente a MongoDB");
     })
     .catch((error) => {
         console.error("Error al conectar con MongoDB:", error);
     })
 
-app.listen(PORT, () => {
-    console.log("Servidor iniciado en http://localhost:" + PORT)
-})
-
-
+// Ruta principal - evita el 404 al entrar al dominio
+app.get("/", (req, res) => {
+    res.send(`
+        <h1>API de Películas y Series</h1>
+        <p>Rutas disponibles:</p>
+        <ul>
+            <li>GET /peliculas</li>
+            <li>GET /peliculas/:id</li>
+            <li>POST /peliculas</li>
+            <li>PUT /peliculas/:id</li>
+            <li>DELETE /peliculas/:id</li>
+            <li>GET /series</li>
+            <li>GET /series/:id</li>
+            <li>POST /series</li>
+            <li>PUT /series/:id</li>
+            <li>DELETE /series/:id</li>
+        </ul>
+    `);
+});
 
 const peliculaSchema = new mongoose.Schema(
     {
-
         titulo: { type: String, required: true, trim: true },
         genero: { type: String, required: true, trim: true },
         año: { type: Number, required: true, min: 1 },
@@ -35,13 +43,10 @@ const peliculaSchema = new mongoose.Schema(
         idioma: { type: String, required: true, trim: true },
         calificacion: { type: Number, required: true, min: 0, max: 10 },
         nc: { type: String, required: true, trim: true }
-
     },
     {
         timestamps: true
-
     }
-
 )
 
 const serieSchema = new mongoose.Schema(
@@ -139,9 +144,6 @@ app.get("/series/:id", async (req, res) => {
 
 
 //POST 
-
-
-
 
 app.post("/peliculas", async (req, res) => {
     try {
@@ -315,3 +317,13 @@ app.delete("/series/:id", async (req, res) => {
 
     }
 })
+
+// Solo escuchar en un puerto si NO estamos en Vercel (para pruebas locales)
+if (require.main === module) {
+    const PORT = 3000;
+    app.listen(PORT, () => {
+        console.log("Servidor iniciado en http://localhost:" + PORT)
+    })
+}
+
+module.exports = app;
