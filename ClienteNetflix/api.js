@@ -1,5 +1,5 @@
 
-const API_URL = "https://api-netflix-whma.vercel.app/";
+const API_URL = "https://api-netflix-tlkm.vercel.app";
 
 // Obtener películas
 async function obtenerPeliculas() {

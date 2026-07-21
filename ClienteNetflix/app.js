@@ -7,6 +7,7 @@ const año = document.getElementById("año");
 const duracion = document.getElementById("duracion");
 const idioma = document.getElementById("idioma");
 const calificacion = document.getElementById("calificacion");
+const nc = document.getElementById("nc");
 
 const btnConsultar = document.getElementById("btnConsultar");
 const listaPeliculas = document.getElementById("listaPeliculas");
@@ -22,7 +23,8 @@ formulario.addEventListener("submit", async (e) => {
         año: Number(año.value),
         duracion: Number(duracion.value),
         idioma: idioma.value,
-        calificacion: Number(calificacion.value)
+        calificacion: Number(calificacion.value),
+        nc: nc.value
     };
 
     try {
