@@ -14,7 +14,7 @@ mongoose.connect("mongodb+srv://grupo:grupo@servidorprueba.ygegryf.mongodb.net/n
         console.error("Error al conectar con MongoDB:", error);
     })
 
-// Ruta principal - evita el 404 al entrar al dominio
+// Ruta principal 
 app.get("/", (req, res) => {
     res.send(`
         <h1>API de Películas y Series</h1>
@@ -318,7 +318,7 @@ app.delete("/series/:id", async (req, res) => {
     }
 })
 
-// Solo escuchar en un puerto si NO estamos en Vercel (para pruebas locales)
+// Solo escuchar en un puerto si NO estamos en Vercel
 if (require.main === module) {
     const PORT = 3000;
     app.listen(PORT, () => {
