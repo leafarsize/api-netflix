@@ -47,21 +47,45 @@ formulario.addEventListener("submit", async (e) => {
 btnConsultar.addEventListener("click", async () => {
 
     try {
-
         const peliculas = await obtenerPeliculas();
 
         listaPeliculas.innerHTML = "";
-
         peliculas.forEach((pelicula) => {
 
             const li = document.createElement("li");
 
-            li.textContent = pelicula.titulo;
+            const portada = document.createElement("img");
+            portada.src = pelicula.portada;
+            portada.classList.add("portada-pelicula");
 
-            listaPeliculas.appendChild(li);
+            const info = document.createElement("div");
+            info.classList.add("info-pelicula");
 
+            const titulo = document.createElement("strong");
+            titulo.textContent = pelicula.titulo;
+
+            const genero = document.createElement("span");
+            genero.textContent = "Género: " + pelicula.genero;
+
+            const año = document.createElement("span");
+            año.textContent = "Año: " + pelicula.año;
+
+            const duracion = document.createElement("span");
+            duracion.textContent = "Duración: " + pelicula.duracion;
+
+            const idioma = document.createElement("span");
+            idioma.textContent = "Idioma: " + pelicula.idioma;
+
+            const calificacion = document.createElement("span");
+            calificacion.textContent = "Calificación: " + pelicula.calificacion;
+
+            const nc = document.createElement("span");
+            nc.textContent = "Nc: " + pelicula.nc;
+
+            info.append(titulo, genero, año, duracion, idioma, calificacion, nc);
+            li.append(portada, info);
+            listaPeliculas.append(li);
         });
-
     } catch (error) {
 
         alert(error.message);
